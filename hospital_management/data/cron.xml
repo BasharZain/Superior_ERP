@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="test_patient_cron" model="ir.cron">
+        <field name="name">Check Patient Status</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <!--        <field name="nextcall" eval="(DateTime.now().replace(hour=2, minute=0) + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')" />-->
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_hospital_patient"/>
+        <field name="code">model.test_cron_job()</field>
+        <field name="state">code</field>
+    </record>
+</odoo>

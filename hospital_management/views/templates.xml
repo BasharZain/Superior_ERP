@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="patient_page" name="Hospital Patients">
+        <t t-call="website.layout">
+            <div class="container">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td><b>Name</b></td>
+                            <td><b>Patient Id</b></td>
+                            <td><b>Patient Age</b></td>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="patients" t-as="patient">
+                            <tr>
+                                <td>
+                                    <a t-attf-href="/hospital/patient/appointments/#{patient.id}?{{keep_query()}}">
+                                        <t t-esc="patient.patient_name"/>
+                                    </a>
+                                </td>
+                                <td class="text-left">
+                                    #
+                                    <span t-esc="patient.id"/>
+                                </td>
+                                <td>
+                                    <t t-esc="patient.patient_age"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="patient_appointment" name="Appointments">
+        <t t-call="website.layout">
+            <div class="container">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td><b>Name</b></td>
+                            <td><b>Notes</b></td>
+                            <td><b>Doctor</b></td>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="appointments" t-as="appointments">
+                            <tr>
+                                <td>
+                                    <t t-esc="appointments.name"/>
+                                </td>
+                                <td>
+                                    <t t-esc="appointments.notes"/>
+                                </td>
+                                <td>
+                                    <t t-esc="appointments.doctor_id.name"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+</odoo>

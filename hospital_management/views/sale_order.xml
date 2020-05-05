@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--        This is for inherit your module field in the existing one-->
+        <record id="sale_order_inherit" model="ir.ui.view">
+            <field name="name">sale.order.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="patient_id"/>
+                </field>
+            </field>
+        </record>
+
+         <record id="view_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="mobile" position="attributes">
+                    <attribute name="required">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <!--        This is to change the name of any existing window-->
+        <record id="sale.action_orders" model="ir.actions.act_window">
+            <field name="name">Appointment</field>
+        </record>
+        <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
+            <field name="name">New Quotation</field>
+        </record>
+
+<!--&lt;!&ndash;This is to change the menu name of any module and also change the sequence-->
+        <record id="sale.menu_sale_quotations" model="ir.ui.menu">
+            <field name="name">New Quotations</field>
+            <field name="sequence">100</field>
+        </record>
+
+
+
+    </data>
+</odoo>
