@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="schedule_report_form" model="ir.ui.view">
+            <field name="name">schedule.report.form</field>
+            <field name="model">schedule.report</field>
+            <field name="arch" type="xml">
+                <form string="Schedule Report">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="check_in"/>
+                            <field name="check_out"/>
+                            <field name="start_datetime"/>
+                            <field name="end_datetime"/>
+                            <field name="worked_hours"/>
+                            <field name="allocated_hours"/>
+                            <field name="active" invisible="1"/>
+                            <field name="id" invisible="1"/>
+                            <field name="late_min"/>
+                            <field name="new_late"/>
+                            <field name="extra_time"/>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="schedule_report_tree" model="ir.ui.view">
+            <field name="name">schedule.report.tree</field>
+            <field name="model">schedule.report</field>
+            <field name="arch" type="xml">
+                <tree string="Schedule Report" decoration-danger="check_in &gt; late_min"
+                      decoration-warning="check_out &lt; end_datetime"
+                      decoration-primary="check_out &gt; end_datetime">
+                    <field name="name"/>
+                    <field name="check_in"/>
+                    <field name="start_datetime"/>
+                    <field name="late_min"/>
+                    <field name="check_out"/>
+                    <field name="end_datetime"/>
+                    <field name="worked_hours"/>
+                    <field name="allocated_hours"/>
+                    <field name="id" invisible="1"/>
+                    <field name="active" invisible="1"/>
+                    <field name="new_late"/>
+                    <field name="extra_time"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="schedule_report_pivot" model="ir.ui.view">
+            <field name="name">schedule.report.pivot</field>
+            <field name="model">schedule.report</field>
+            <field name="arch" type="xml">
+                <pivot string="Schedule Report">
+
+                    <field name="allocated_hours" type="measure"/>
+                    <field name="worked_hours" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+        <record id="action_schedule_report" model="ir.actions.act_window">
+            <field name="name">DOS Schedule Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">schedule.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,pivot,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    DOS Schedule Report
+                </p>
+            </field>
+        </record>
+
+
+        <menuitem name="Actual vs Scheduled Report" action="action_schedule_report" id="menu_schedule_report"
+                  parent="planning_menu_reporting"
+                  sequence="7"/>
+
+    </data>
+</odoo>

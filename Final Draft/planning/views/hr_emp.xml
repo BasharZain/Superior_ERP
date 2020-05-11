@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="act_hr_employee_2_plan" model="ir.actions.act_window">
+        <field name="name">Planning</field>
+        <field name="res_model">planning.slot</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{'search_default_employee_id': [active_id],'default_employee_id': active_id,
+            'search_default_group_by_state': 1}
+        </field>
+    </record>
+
+    <record id="hr_employee_plan_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.plan.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='toggle_active']" position="before">
+                <button name="%(act_hr_employee_2_plan)d"
+                    class="oe_stat_button"
+                    icon="fa-money"
+                    type="action">
+                    <field name="emp_plan_count" widget="statinfo" string="Planned Shift"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+        <record id="hr_plan_ask_approve" model="ir.actions.server">
+        <field name="name">Ask Approval</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_planning_slot"/>
+        <field name="binding_model_id" ref="model_planning_slot"/>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    for rec in records:
+        if rec.state == 'draft':
+            rec.action_confirm()
+        </field>
+    </record>
+
+    <record id="hr_plan_approve" model="ir.actions.server">
+        <field name="name">Approve Schedule</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_planning_slot"/>
+        <field name="binding_model_id" ref="model_planning_slot"/>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    for rec in records:
+        if rec.state == 'approve1':
+            rec.action_approve1()
+        </field>
+    </record>
+    </data>
+</odoo>

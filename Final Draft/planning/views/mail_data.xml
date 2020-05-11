@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Leave specific activities -->
+        <record id="mail_act_schedule_approval" model="mail.activity.type">
+            <field name="name">Schedule Approval</field>
+            <field name="icon">fa-sun-o</field>
+            <field name="res_model_id" ref="planning.model_planning_slot"/>
+        </record>
+    </data>
+</odoo>
