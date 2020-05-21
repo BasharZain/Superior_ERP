@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="custom_schedule_report_form" model="ir.ui.view">
+            <field name="name">custom.schedule.report.form</field>
+            <field name="model">schedule.report</field>
+            <field name="arch" type="xml">
+                <form string="Schedule Report">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="check_in"/>
+                            <field name="check_out"/>
+                            <field name="start_datetime"/>
+                            <field name="end_datetime"/>
+                            <field name="worked_hours"/>
+                            <field name="allocated_hours"/>
+                            <field name="active" invisible="1"/>
+                            <field name="id" invisible="1"/>
+                            <field name="late_min"/>
+                            <field name="new_late"/>
+                            <field name="extra_time"/>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="custom_schedule_report_tree" model="ir.ui.view">
+            <field name="name">custom.schedule.report.tree</field>
+            <field name="model">schedule.report</field>
+            <field name="arch" type="xml">
+                <tree string="Schedule Report" decoration-danger="check_in &gt; late_min"
+                      decoration-warning="check_out &lt; end_datetime"
+                      decoration-primary="check_out &gt; end_datetime">
+                    <field name="name"/>
+                    <field name="check_in"/>
+                    <field name="start_datetime"/>
+                    <field name="late_min"/>
+                    <field name="check_out"/>
+                    <field name="end_datetime"/>
+                    <field name="worked_hours"/>
+                    <field name="allocated_hours"/>
+                    <field name="id" invisible="1"/>
+                    <field name="active" invisible="1"/>
+                    <field name="new_late"/>
+                    <field name="extra_time"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="custom_view_search" model="ir.ui.view">
+            <field name="name">custom.view.search</field>
+            <field name="model">schedule.report</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="allocated_hours"/>
+                    <filter name="worked_hours" string="Worked Hours"/>
+                    <filter name="check_out" string="Check Out"/>
+                    <separator/>
+                    <group string="Group By">
+                        <filter name="name" string="Employee" context="{'group_by': 'name'}"/>
+                        <filter name="start_datetime" string="Scheduled Date"
+                                context="{'group_by':'start_datetime:day'}"/>
+                        <filter name="check_in" string="Check in" context="{'group_by':'check_in:day'}"/>
+                        <filter name="check_out" string="Check Out" context="{'group_by':'check_out:day'}"/>
+
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="custom_schedule_report_pivot" model="ir.ui.view">
+            <field name="name">custom.schedule.report.pivot</field>
+            <field name="model">schedule.report</field>
+            <field name="arch" type="xml">
+                <pivot string="Schedule Report">
+
+                    <field name="allocated_hours" type="measure"/>
+                    <field name="worked_hours" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+        <record id="action_custom_schedule_report" model="ir.actions.act_window">
+            <field name="name">DOS Schedule Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">schedule.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,pivot,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    DOS Schedule Report
+                </p>
+            </field>
+        </record>
+
+
+        <menuitem name="DOS Actual VS Scheduled Report" action="action_custom_schedule_report" id="custom_menu_schedule_report"
+                  parent="planning.planning_menu_reporting"
+                  sequence="9"/>
+
+    </data>
+</odoo>
